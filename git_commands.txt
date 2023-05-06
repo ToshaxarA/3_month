@@ -17,6 +17,12 @@ git status  (проверка нашего стэйжа)
 git commit -m "commit"
 git push -u origin master
 
+git checkout -b master - сменить мастер ветку
+
+# add commit
+
+git push origin master
+
 
 git remote add <name> <url>
 Создание нового подключения к удаленному репозиторию. После добавления удаленного репозитория имя
