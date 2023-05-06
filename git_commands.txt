@@ -1,0 +1,58 @@
+Первые три комманды пишутся только один раз когда вы делаете первый пуш
+git --version 
+git config --global user.name "YOUR USERNAME ON GITHUB"
+git config --global user.email "YOUR EMAIL ON GITHUB"
+
+*
+git init
+git add .
+git status
+git commit -m "First Commit"
+git remote add origin <HTTPS link.git> - Remote тоже пишется единожды когда соединяем проект с репозиторем
+git push origin main
+
+Когда вы все сделаете в след раз можете начинать с комманды
+git add *
+git status  (проверка нашего стэйжа)
+git commit -m "commit"
+git push -u origin master
+
+
+git remote add <name> <url>
+Создание нового подключения к удаленному репозиторию. После добавления удаленного репозитория имя
+＜name＞ можно использовать в качестве удобного ярлыка для адреса ＜url＞ в других командах Git.
+
+git remote rm <name>
+Удаление подключения к удаленному репозиторию с именем ＜name＞.
+
+************************************************************************************************
+…or create a new repository on the command line
+echo "# 3_month" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/ToshaxarA/3_month.git
+git push -u origin main
+
+…or push an existing repository from the command line
+git remote add origin https://github.com/ToshaxarA/3_month.git
+git branch -M main
+git push -u origin main
+
+…or import code from another repository
+You can initialize this repository with code from a Subversion, Mercurial, or TFS project.
+
+https://github.com/ToshaxarA/3_month.git
+
+usage: git remote [-v | --verbose]
+   or: git remote add [-t <branch>] [-m <master>] [-f] [--tags | --no-tags] [--mirror=<fetch|push>] <name> <url>
+   or: git remote remove <name>
+   or: git remote set-head <name> (-a | --auto | -d | --delete | <branch>)
+   or: git remote prune [-n | --dry-run] <name>
+   or: git remote [-v | --verbose] update [-p | --prune] [(<group> | <remote>)...]
+   or: git remote set-branches [--add] <name> <branch>...
+   or: git remote get-url [--push] [--all] <name>
+   or: git remote set-url [--push] <name> <newurl> [<oldurl>]
+   or: git remote set-url --add <name> <newurl>
+   or: git remote set-url --delete <name> <url>
