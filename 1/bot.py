@@ -1,7 +1,7 @@
 # Телеграмм боты, парсинг данных, работа с базами данных
 from aiogram import Bot, Dispatcher, types, executor
 
-bot = Bot("6033434332:AAHWDc-SUkapRzzAiSGI-o8OM5dOt5O5bSU")
+bot = Bot("")
 dp = Dispatcher(bot)
 
 @dp.message_handler(commands=['start'])
