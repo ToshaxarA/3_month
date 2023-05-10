@@ -31,6 +31,10 @@ class VideoState(StatesGroup):
 async def get_url_video(message:types.Message):
     await message.reply("Отправьте ссылку на видео и я вам его скачаю в mp4 формате")
     await VideoState.download.set()
+@dp.message_handler(commands='audio')
+async def get_url_video(message:types.Message):
+    await message.reply("Отправьте ссылку на аудио на Youtube и я вам его скачаю в mp3 формате")
+    await VideoState.download.set()
     
 
 @dp.message_handler(state=VideoState.download)
