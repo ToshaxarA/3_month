@@ -56,6 +56,7 @@ async def download_video(message: types.Message, state: FSMContext):
     await message.reply("Видео и аудио файлы предоставлены, можете скачивать")
 
     video.close()
+    audio.close()
     await state.finish()
 
 @dp.message_handler()
