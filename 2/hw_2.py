@@ -34,11 +34,24 @@ async def get_url_video(message:types.Message):
     
 
 @dp.message_handler(state=VideoState.download)
-async def download_video(message:types.Message, state:FSMContext):
+async def download_video(message: types.Message, state: FSMContext):
     url = message.text
     yt = YouTube(url, use_oauth=True, allow_oauth_cache=True)
-    yt.streams.filter(progressive=True, file_extension='mp4', res='720p').order_by('resolution').desc().first().download()
-    yt.streams.filter(only_audio=True).desc().first().download('audio', f'{yt.title}.mp3')
+    yt.streams.filter(progressive=True, file_extension="mp4").first().download("video", f"{yt.title}.mp4")
+    yt.streams.filter(only_audio=True).first().download("audio", f"{yt.title}.mp3")
+    title = yt.title
+    video = open(f"video/{title}.mp4", "rb")
+    audio = open(f"audio/{title}.mp3", "rb")
+    await message.reply("Видео и аудио загружаются")
+    await bot.send_video(message.chat.id, video)
+    await bot.send_audio(message.chat.id, audio)
+    
+    
+    os.remove(f"video/{title}.mp4")
+    os.remove(f"audio/{title}.mp3")
+    await message.reply("Видео и аудио файлы предоставлены, можете скачивать")
+
+    video.close()
     await state.finish()
 
 @dp.message_handler()
