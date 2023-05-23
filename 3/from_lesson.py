@@ -57,8 +57,8 @@ async def start(message:types.Message):
 class VideoState(StatesGroup):
     download = State()
 
-@dp.message_handler(commands='mail')
-async def get_mail_text
+# @dp.message_handler(commands='mail')
+# async def get_mail_text
 
 @dp.message_handler(commands='video')
 async def get_url_video(message:types.Message):
