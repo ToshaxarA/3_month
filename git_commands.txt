@@ -1,3 +1,10 @@
+python −m venv
+
+venv\Scripts\activate
+
+
+
+
 Первые три комманды пишутся только один раз когда вы делаете первый пуш
 git --version 
 git config --global user.name "YOUR USERNAME ON GITHUB"

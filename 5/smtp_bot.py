@@ -54,15 +54,16 @@ async def get_message(message:types.Message, state:FSMContext):
 
 @dp.message_handler(state=EmailState.message)
 async def send_message(message:types.Message, state:FSMContext):
-    await state.update_data(mail=message.text)
-    mail_data = await storage.get_data(user=message.from_user.id)
-    print(mail_data)
-
-    
-
-
-
-
-
+    await message.answer("Отправляем письмо...")
+    await state.update_data(text=message.text)
+    res = await storage.get_data(user=message.from_user.id)
+    if send_mail(res['text'], res['subject'], res['mail']):
+        await message.answer("Письмо отправлено!", reply_markup=types.ReplyKeyboardRemove())
+    else:
+        await message.answer("Что-то пошло не так... Письмо не отправлено. Попробуете ещё раз?"
+                                 , reply_markup=types.ReplyKeyboardRemove())
+    await state.finish()
+    await start(message)
 
 executor.start_polling(dp, skip_updates=True)
+
