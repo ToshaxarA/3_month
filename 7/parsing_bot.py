@@ -27,6 +27,23 @@ class TextState(StatesGroup):
 
 @dp.message_handler(commands='start')
 async def start(message:types.Message):
+    image_url = 'https://www.akchabar.kg/media/article/money.jpeg.850x445_q82_crop.jpg'
+
+    # Загружаем изображение по URL
+    response = requests.get(image_url)
+    response.raise_for_status()
+
+    # Создаем временный файл для сохранения изображения
+    with open('temp_image.jpg', 'wb') as file:
+        file.write(response.content)
+
+    # Открываем временный файл с изображением
+    with open('temp_image.jpg', 'rb') as photo:
+        # Отправляем изображение пользователю
+        await bot.send_photo(message.chat.id, photo)
+
+    # Удаляем временный файл
+    os.remove('temp_image.jpg')
     await message.reply(f"""Привет {message.from_user.first_name}! Я информационный бот для конвертации денежных единиц. Чтобы узнать текущий курс НацБанка Кыргызстана введи команду /currency\nДля конвертации Вашей денежной единицы нажмите далее на кнопку той валюты, которую вы хотите конвертировать.""")
                         
 @dp.message_handler(commands='currency')
@@ -56,11 +73,11 @@ KZT:{kzt_currency}
 logging.basicConfig(level=logging.INFO)
 
 inline_keyboards = [
-    InlineKeyboardButton ('$ USD 💵', callback_data='usd'),
-    InlineKeyboardButton ('€ EUR 💶', callback_data='eur'),
-    InlineKeyboardButton ('₽ RUB 🧻', callback_data='rub'),
-    InlineKeyboardButton ('₸ KZT ⚖️', callback_data='kzt'),
-    InlineKeyboardButton ('Сомы в рубли', callback_data='som_v_rub'),
+    InlineKeyboardButton ('$ USD 💵 🇺🇸', callback_data='usd'),
+    InlineKeyboardButton ('€ EUR 💶 🇪🇺', callback_data='eur'),
+    InlineKeyboardButton ('₽ RUB 🇷🇺', callback_data='rub'),
+    InlineKeyboardButton ('₸ KZT 🇰🇿', callback_data='kzt'),
+    InlineKeyboardButton ('🇰🇬 Сомы в рубли 🇷🇺', callback_data='som_v_rub'),
 
 ]
 inline = InlineKeyboardMarkup(row_width=4).add(*inline_keyboards)
