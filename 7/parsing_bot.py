@@ -22,6 +22,8 @@ class TextState(StatesGroup):
     calculation_eur = State()
     calculation_rub = State()
     calculation_kzt = State()
+    calculation_som_v_rub = State()
+
 
 @dp.message_handler(commands='start')
 async def start(message:types.Message):
@@ -57,7 +59,9 @@ inline_keyboards = [
     InlineKeyboardButton ('$ USD 💵', callback_data='usd'),
     InlineKeyboardButton ('€ EUR 💶', callback_data='eur'),
     InlineKeyboardButton ('₽ RUB 🧻', callback_data='rub'),
-    InlineKeyboardButton ('₸ KZT ⚖️', callback_data='kzt')
+    InlineKeyboardButton ('₸ KZT ⚖️', callback_data='kzt'),
+    InlineKeyboardButton ('Сомы в рубли', callback_data='som_v_rub'),
+
 ]
 inline = InlineKeyboardMarkup(row_width=4).add(*inline_keyboards)
 
@@ -73,6 +77,8 @@ async def all_inline(call):
         await convertion_rub(call.message)
     elif call.data == 'kzt':
         await convertion_kzt(call.message)
+    elif call.data == 'som_v_rub':
+        await convertion_som_v_rub(call.message)
         
 @dp.message_handler(commands='usd')
 async def convertion_usd(message:types.Message):
@@ -156,6 +162,28 @@ async def get_course_kzt(message:types.Message, state:FSMContext):
     kurs_s_tochkoi_kzt = float(kzt_currency.replace(',','.'))
     itog = round(kurs_s_tochkoi_kzt*number, 2)   
     await message.answer(f"В сомах это будет: {itog}")
+    await state.finish()
+
+@dp.message_handler(commands='som_v_rub')
+async def convertion_som_v_rub(message:types.Message):
+    await message.answer(f"Какую сумму хотите конвертировать?: ")
+    await TextState.calculation_som_v_rub.set()
+
+@dp.message_handler(state=TextState.calculation_som_v_rub)
+async def get_course_som_v_rub(message:types.Message, state:FSMContext):
+    url = 'https://www.nbkr.kg/index.jsp?lang=RUS'
+    responce =requests.get(url)
+    soup=BeautifulSoup(responce.text, 'lxml')
+    currency = soup.find_all('td', class_='exrate')
+    for som_v_rub in currency[4:5]:
+        som_v_rub_currency = som_v_rub.text
+        
+    await state.update_data(calculation=message.text)
+    number = float(message.text)
+    kurs_s_tochkoi_som_v_rub = float(som_v_rub_currency.replace(',','.'))
+    
+    itog = round((number/kurs_s_tochkoi_som_v_rub), 2)   
+    await message.answer(f"В рублях это будет: {itog}")
     await state.finish()
 
 @dp.message_handler()
