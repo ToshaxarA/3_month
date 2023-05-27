@@ -93,6 +93,7 @@ async def get_subject(message:types.Message, state:FSMContext):
     kurs_s_tochkoi_usd = float(usd_currency.replace(',','.'))
     itog = round(kurs_s_tochkoi_usd*number, 2)   
     await message.answer(f"В сомах это будет: {itog}")
+    await state.finish()
 
 @dp.message_handler(commands='eur')
 async def convertion_eur(message:types.Message):
@@ -113,6 +114,7 @@ async def get_course_eur(message:types.Message, state:FSMContext):
     kurs_s_tochkoi_eur = float(eur_currency.replace(',','.'))
     itog = round(kurs_s_tochkoi_eur*number,2)  
     await message.answer(f"В сомах это будет: {itog}")
+    await state.finish()
 
 @dp.message_handler(commands='rub')
 async def convertion_rub(message:types.Message):
@@ -133,6 +135,7 @@ async def get_course_rub(message:types.Message, state:FSMContext):
     kurs_s_tochkoi_rub = float(rub_currency.replace(',','.'))
     itog = round(kurs_s_tochkoi_rub*number, 2)   
     await message.answer(f"В сомах это будет: {itog}")
+    await state.finish()
 
 @dp.message_handler(commands='kzt')
 async def convertion_kzt(message:types.Message):
@@ -153,6 +156,7 @@ async def get_course_kzt(message:types.Message, state:FSMContext):
     kurs_s_tochkoi_kzt = float(kzt_currency.replace(',','.'))
     itog = round(kurs_s_tochkoi_kzt*number, 2)   
     await message.answer(f"В сомах это будет: {itog}")
+    await state.finish()
 
 @dp.message_handler()
 async def not_found(message:types.Message):
