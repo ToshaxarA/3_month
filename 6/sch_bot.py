@@ -105,6 +105,7 @@ async def process_time_choosing(message: types.Message, state: FSMContext):
         ''', (message.from_user.id, task, time))
         conn.commit()
         await message.answer("Ваша задача записана!", reply_markup=inline2)
+        await state.finish()
 
 @dp.callback_query_handler(lambda query: query.data == 'delete_task')
 async def add_task(callback_query: types.CallbackQuery):

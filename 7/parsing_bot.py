@@ -67,7 +67,7 @@ EUR:{eur_currency}
 RUB:{rub_currency}
 KZT:{kzt_currency}
 
-Какую Валюту хотите конвертировать?""", reply_markup=inline)
+Какую Валюту хотите конвертировать в сомы?""", reply_markup=inline)
     
 
 logging.basicConfig(level=logging.INFO)
@@ -115,7 +115,7 @@ async def get_subject(message:types.Message, state:FSMContext):
     number = float(message.text)
     kurs_s_tochkoi_usd = float(usd_currency.replace(',','.'))
     itog = round(kurs_s_tochkoi_usd*number, 2)   
-    await message.answer(f"В сомах это будет: {itog}")
+    await message.answer(f"В сомах {number} USD будет: {itog}")
     await state.finish()
 
 @dp.message_handler(commands='eur')
@@ -136,7 +136,7 @@ async def get_course_eur(message:types.Message, state:FSMContext):
     number = float(message.text)
     kurs_s_tochkoi_eur = float(eur_currency.replace(',','.'))
     itog = round(kurs_s_tochkoi_eur*number,2)  
-    await message.answer(f"В сомах это будет: {itog}")
+    await message.answer(f"В сомах {number} Евро будет: {itog}")
     await state.finish()
 
 @dp.message_handler(commands='rub')
@@ -157,7 +157,7 @@ async def get_course_rub(message:types.Message, state:FSMContext):
     number = float(message.text)
     kurs_s_tochkoi_rub = float(rub_currency.replace(',','.'))
     itog = round(kurs_s_tochkoi_rub*number, 2)   
-    await message.answer(f"В сомах это будет: {itog}")
+    await message.answer(f"В сомах {number} Рублей будет: {itog}")
     await state.finish()
 
 @dp.message_handler(commands='kzt')
@@ -178,7 +178,7 @@ async def get_course_kzt(message:types.Message, state:FSMContext):
     number = float(message.text)
     kurs_s_tochkoi_kzt = float(kzt_currency.replace(',','.'))
     itog = round(kurs_s_tochkoi_kzt*number, 2)   
-    await message.answer(f"В сомах это будет: {itog}")
+    await message.answer(f"В сомах {number} Тенге будет: {itog}")
     await state.finish()
 
 @dp.message_handler(commands='som_v_rub')
@@ -200,7 +200,7 @@ async def get_course_som_v_rub(message:types.Message, state:FSMContext):
     kurs_s_tochkoi_som_v_rub = float(som_v_rub_currency.replace(',','.'))
     
     itog = round((number/kurs_s_tochkoi_som_v_rub), 2)   
-    await message.answer(f"В рублях это будет: {itog}")
+    await message.answer(f"В рублях {number} сом будет: {itog}")
     await state.finish()
 
 @dp.message_handler()
